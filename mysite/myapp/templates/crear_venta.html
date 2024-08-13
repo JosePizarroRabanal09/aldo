@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Crear Producto</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        #wrapper {
+            display: flex;
+            height: 100vh;
+        }
+
+        #sidebar {
+            background-color: #343a40;
+            min-width: 250px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        #sidebar .sidebar-link {
+            color: #ffffff;
+            font-weight: bold;
+            padding: 15px;
+            display: block;
+            text-decoration: none;
+        }
+
+        #sidebar .sidebar-link:hover {
+            background-color: #495057;
+            text-decoration: none;
+        }
+
+        #sidebar .active {
+            background-color: #495057;
+        }
+
+        #content-wrapper {
+            margin-left: 250px;
+            width: calc(100% - 250px);
+            transition: margin-left 0.3s ease;
+        }
+
+        .navbar {
+            background-color: #ffffff;
+            z-index: 1001;
+        }
+
+        .form-container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container h5 {
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            font-weight: bold;
+        }
+
+        .form-control {
+            max-width: 100%;
+        }
+
+        @media (max-width: 991.98px) {
+            #sidebar {
+                transform: translateX(-100%);
+                position: fixed;
+                z-index: 1050;
+                height: 100vh;
+                transition: transform 0.3s ease;
+            }
+
+            #content-wrapper {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            #sidebar.active {
+                transform: translateX(0);
+            }
+        }
+
+        .sidebar-toggler {
+            display: none;
+        }
+
+        @media (max-width: 991.98px) {
+            .sidebar-toggler {
+                display: inline-block;
+            }
+        }
+
+        /* Styles for notification */
+        .notification {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 1050;
+            display: none;
+            background-color: #007bff;
+            color: white;
+            padding: 1rem;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .notification.show {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <nav id="sidebar" class="d-flex flex-column p-3">
+            <h3 class="text-white">Dashboard</h3>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a href="{% url 'home' %}" class="nav-link sidebar-link "><i class="fas fa-home me-2"></i>Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'ver_productos' %}" class="nav-link sidebar-link active"><i class="fas fa-box me-2"></i>Productos</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'ver_clientes' %}" class="nav-link sidebar-link"><i class="fas fa-users me-2"></i>Clientes</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'ver_ventas' %}" class="nav-link sidebar-link"><i class="fas fa-shopping-cart me-2"></i>Ventas</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'listar_emisores' %}" class="nav-link sidebar-link " ><i class="fas fa-id-card me-2"></i>Emisores</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'ver_gastos' %}" class="nav-link sidebar-link"><i class="fas fa-money-bill-wave me-2"></i>Gastos</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'ver_reportes' %}" class="nav-link sidebar-link"><i class="fas fa-chart-line me-2"></i>Reportes</a>
+                </li>
+                
+            </ul>
+        </nav>
+
+        <div id="content-wrapper" class="w-100 p-4">
+            <nav class="navbar navbar-expand-lg navbar-light shadow-custom mb-4">
+                <button class="btn btn-link sidebar-toggler d-lg-none" type="button">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                            <span class="d-none d-lg-inline text-gray-600 small">Usuario</span>
+                            <img class="img-profile rounded-circle ms-2" src="https://cdn-icons-png.flaticon.com/512/764/764865.png" alt="Usuario" width="30">
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="{% url 'perfil' %}"><i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>Perfil</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-cogs fa-sm fa-fw me-2 text-gray-400"></i>Configuración</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{% url 'salir' %}"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>Salir</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="container">
+                <div class="form-container">
+                    <h5>Crear Venta</h5>
+                    <form method="POST" action="{% url 'crear_venta' %}">
+                        {% csrf_token %}
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="producto" class="form-label">Producto</label>
+                                <select id="producto" name="producto" class="form-select" required>
+                                    <option value="">Selecciona un producto</option>
+                                    {% for producto in productos %}
+                                        <option value="{{ producto.id }}" data-precio="{{ producto.precio_venta }}">{{ producto.nombre }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="cliente" class="form-label">Cliente</label>
+                                <select id="cliente" name="cliente" class="form-select" required>
+                                    <option value="">Selecciona un cliente</option>
+                                    {% for cliente in clientes %}
+                                        <option value="{{ cliente.id }}">{{ cliente.nombre }} {{ cliente.apellido }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="tipo_venta" class="form-label">Tipo de Venta</label>
+                                <select id="tipo_venta" name="tipo_venta" class="form-select" required>
+                                    <option value="">Selecciona el tipo de venta</option>
+                                    <option value="NORMAL">Normal</option>
+                                    <option value="FRACCIONADO">Fraccionado</option>
+                                    <option value="DROPSHIPPING">Dropshipping</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="precio_venta" class="form-label">Precio de Venta</label>
+                                <input type="text" id="precio_venta" name="precio_venta" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3 d-none" id="pago_fraccionado_container">
+                            <div class="col-md-12">
+                                <label for="pago_fraccionado" class="form-label">Pago Inicial</label>
+                                <input type="text" id="pago_fraccionado" name="pago_fraccionado" class="form-control">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Crear Venta</button>
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+        </div>
+    </div>
+
+        </div>
+    </div>
+
+    <!-- Notification -->
+    {% if messages %}
+        <div id="notification" class="notification">
+            {% for message in messages %}
+                <p id="notification-message" class="mb-0">{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const notification = document.getElementById('notification');
+            if (notification) {
+                notification.classList.add('show');
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 5000); // Hide after 5 seconds
+            }
+    
+            // Toggle sidebar visibility
+            document.querySelector('.sidebar-toggler').addEventListener('click', () => {
+                document.getElementById('sidebar').classList.toggle('active');
+            });
+    
+            // Update the price field based on the selected product
+            const productoSelect = document.getElementById('producto');
+            const precioInput = document.getElementById('precio_venta');
+    
+            productoSelect.addEventListener('change', function() {
+                const selectedOption = productoSelect.options[productoSelect.selectedIndex];
+                const precio = selectedOption.getAttribute('data-precio');
+                precioInput.value = precio || '';
+            });
+    
+            // Initialize price on page load if a product is preselected
+            const initialSelectedOption = productoSelect.options[productoSelect.selectedIndex];
+            if (initialSelectedOption) {
+                const initialPrecio = initialSelectedOption.getAttribute('data-precio');
+                precioInput.value = initialPrecio || '';
+            }
+    
+            // Toggle Pago Inicial field based on Tipo de Venta
+            const tipoVentaSelect = document.getElementById('tipo_venta');
+            const pagoFraccionadoContainer = document.getElementById('pago_fraccionado_container');
+    
+            tipoVentaSelect.addEventListener('change', function() {
+                if (tipoVentaSelect.value === 'FRACCIONADO') {
+                    pagoFraccionadoContainer.classList.remove('d-none');
+                } else {
+                    pagoFraccionadoContainer.classList.add('d-none');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil - Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        #wrapper {
+            display: flex;
+            height: 100vh;
+        }
+
+        #sidebar {
+            background-color: #343a40;
+            min-width: 250px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        #sidebar .sidebar-link {
+            color: #ffffff;
+            font-weight: bold;
+            padding: 15px;
+            display: block;
+            text-decoration: none;
+        }
+
+        #sidebar .sidebar-link:hover {
+            background-color: #495057;
+            text-decoration: none;
+        }
+
+        #sidebar .active {
+            background-color: #495057;
+        }
+
+        #content-wrapper {
+            margin-left: 250px;
+            width: calc(100% - 250px);
+            transition: margin-left 0.3s ease;
+        }
+
+        .navbar {
+            background-color: #ffffff;
+            z-index: 1001;
+        }
+
+        .card {
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .shadow-custom {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 991.98px) {
+            #sidebar {
+                transform: translateX(-100%);
+                position: fixed;
+                z-index: 1050;
+                height: 100vh;
+                transition: transform 0.3s ease;
+            }
+
+            #content-wrapper {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            #sidebar.active {
+                transform: translateX(0);
+            }
+        }
+
+        .sidebar-toggler {
+            display: none;
+        }
+
+        @media (max-width: 991.98px) {
+            .sidebar-toggler {
+                display: inline-block;
+            }
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .table-container {
+            margin-bottom: 20px;
+        }
+        .pagination {
+            justify-content: center;
+        }
+        #filter-form {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <nav id="sidebar" class="d-flex flex-column p-3">
+            <h3 class="text-white">Dashboard</h3>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a href="{% url 'home' %}" class="nav-link sidebar-link "><i class="fas fa-home me-2"></i>Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'ver_productos' %}" class="nav-link sidebar-link"><i class="fas fa-box me-2"></i>Productos</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'ver_clientes' %}" class="nav-link sidebar-link "><i class="fas fa-users me-2"></i>Clientes</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'ver_ventas' %}" class="nav-link sidebar-link"><i class="fas fa-shopping-cart me-2"></i>Ventas</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'listar_emisores' %}" class="nav-link sidebar-link " ><i class="fas fa-id-card me-2"></i>Emisores</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'ver_gastos' %}" class="nav-link sidebar-link"><i class="fas fa-money-bill-wave me-2"></i>Gastos</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'ver_reportes' %}" class="nav-link sidebar-link active"><i class="fas fa-chart-line me-2"></i>Reportes</a>
+                </li>
+                
+            </ul>
+        </nav>
+
+        <div id="content-wrapper" class="w-100 p-4">
+            <nav class="navbar navbar-expand-lg navbar-light shadow-custom mb-4">
+                <button class="btn btn-link sidebar-toggler d-lg-none" type="button">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                            <span class="d-none d-lg-inline text-gray-600 small">{{ user.username }}</span>
+                            <img class="img-profile rounded-circle ms-2" src="https://cdn-icons-png.flaticon.com/512/764/764865.png" alt="Usuario" width="30">
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="{% url 'perfil' %}"><i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>Perfil</a></li>
+                            <li><a class="dropdown-item" href="{% url 'salir' %}"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>Salir</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="container mt-4">
+                <h3 class="text-center mb-4">{{ nombre_reporte }}</h3>
+        
+                <form id="filter-form" method="get" class="row g-3">
+                    <div class="col-md-4">
+                        <label for="mes" class="form-label">Mes</label>
+                        <select name="mes" id="mes" class="form-select">
+                            <option value="1">Enero</option>
+                            <option value="2">Febrero</option>
+                            <option value="3">Marzo</option>
+                            <option value="4">Abril</option>
+                            <option value="5">Mayo</option>
+                            <option value="6">Junio</option>
+                            <option value="7">Julio</option>
+                            <option value="8">Agosto</option>
+                            <option value="9">Septiembre</option>
+                            <option value="10">Octubre</option>
+                            <option value="11">Noviembre</option>
+                            <option value="12">Diciembre</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="año" class="form-label">Año</label>
+                        <select name="año" id="año" class="form-select">
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                            <option value="2026">2026</option>
+                            <option value="2027">2027</option>
+                            <option value="2028">2028</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 align-self-end">
+                        <button type="submit" class="btn btn-primary w-100">Filtrar</button>
+                    </div>
+                </form>
+        
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover table-bordered text-center align-middle">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Ganancia del Día</th>
+                                <th>Gasto</th>
+                                <th>Ganancia Diaria</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for reporte in reporte %}
+                                <tr>
+                                    <td>{{ reporte.fecha }}</td>
+                                    <td class="text-success fw-bold">{{ reporte.ganancia_dia }}</td>
+                                    <td class="text-danger fw-bold">{{ reporte.gasto_dia }}</td>
+                                    <td class="{% if reporte.ganancia_diaria < 0 %}text-danger{% else %}text-success{% endif %} fw-bold">
+                                        {{ reporte.ganancia_diaria }}
+                                    </td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="4" class="text-center">No hay datos disponibles para el mes seleccionado</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+
+
+    <!-- Notification -->
+    {% if messages %}
+        <div id="notification" class="notification">
+            {% for message in messages %}
+                <p id="notification-message" class="mb-0">{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.querySelector('.sidebar-toggler').addEventListener('click', function () {
+            document.querySelector('#sidebar').classList.toggle('active');
+        });
+        const emisorModal = document.getElementById('emisorModal');
+    emisorModal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+        const clienteId = button.getAttribute('data-cliente-id');
+        const clienteIdInput = document.getElementById('cliente-id-input');
+        clienteIdInput.value = clienteId;
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+            const notification = document.getElementById('notification');
+            if (notification) {
+                notification.classList.add('show');
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 5000); // Hide after 5 seconds
+            }
+        });
+
+
+
+    </script>
+</body>
+
+</html>

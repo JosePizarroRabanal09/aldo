@@ -1,0 +1,6 @@
+Django==4.2.4
+Pillow==10.0.0
+python-docx==0.8.11
+pdfkit==1.0.0
+reportlab==3.6.2
+matplotlib==3.8.0

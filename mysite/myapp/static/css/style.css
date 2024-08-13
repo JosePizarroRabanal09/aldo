@@ -1,0 +1,170 @@
+/* Estilos personalizados para este template */
+body {
+    font-family: 'Nunito', sans-serif;
+    background-color: #f8f9fc;
+    margin: 0;
+    padding: 0;
+}
+
+#wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+#sidebar {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    background-color: #343a40;
+    padding: 1rem;
+}
+
+.sidebar-header {
+    padding: 1rem;
+    background-color: #212529;
+}
+
+.sidebar-header h3 {
+    color: #ffffff;
+}
+
+.components {
+    padding: 0;
+    margin: 0;
+}
+
+.components li {
+    padding: 0.5rem 1rem;
+}
+
+.components li a {
+    color: #ffffff;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.components li a:hover {
+    background-color: #495057;
+    color: #ffffff;
+}
+
+#content-wrapper {
+    margin-left: 250px;
+    width: calc(100% - 250px);
+    transition: margin-left 0.3s;
+}
+
+.topbar {
+    margin-left: 0;
+}
+
+.card {
+    border: 1px solid #dddddd;
+    border-radius: .35rem;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.card.shadow-lg {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card-header {
+    background-color: #f8f9fc;
+    border-bottom: 1px solid #e3e6f0;
+}
+
+.card-body {
+    padding: 1.25rem;
+}
+
+.card.border-left-primary {
+    border-left-color: #4e73df;
+}
+
+.card.border-left-success {
+    border-left-color: #1cc88a;
+}
+
+.card.border-left-info {
+    border-left-color: #36b9cc;
+}
+
+.card.border-left-warning {
+    border-left-color: #f6c23e;
+}
+
+.card .fa-box,
+.card .fa-users,
+.card .fa-shopping-cart,
+.card .fa-money-bill-wave {
+    color: #ffffff;
+}
+
+.card .fa-box {
+    color: #4e73df;
+}
+
+.card .fa-users {
+    color: #1cc88a;
+}
+
+.card .fa-shopping-cart {
+    color: #36b9cc;
+}
+
+.card .fa-money-bill-wave {
+    color: #f6c23e;
+}
+
+.dropdown-menu {
+    min-width: 12rem;
+}
+
+.img-profile {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+}
+
+.sidebar-link i {
+    margin-right: 10px;
+}
+
+.card-animated {
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card-animated:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    #sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    #content-wrapper {
+        margin-left: 0;
+        width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    .card-animated {
+        transform: scale(1);
+    }
+}

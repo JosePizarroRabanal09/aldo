@@ -1,0 +1,108 @@
+<!-- templates/register.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrarse</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .registerBox {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+        .registerBox img.user {
+            display: block;
+            margin: 0 auto 20px;
+        }
+        .registerBox h3 {
+            color: #003366;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        .inputBox input {
+            border-radius: 4px;
+            border: 1px solid #ced4da;
+            margin-bottom: 20px;
+            padding: 10px;
+            width: 100%;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        .inputBox input:focus {
+            border-color: #003366;
+            box-shadow: 0px 0px 5px rgba(0, 51, 102, 0.5);
+            outline: none;
+        }
+        .btn-primary {
+            background-color: #003366;
+            border-color: #003366;
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+        a {
+            color: #003366;
+        }
+        a:hover {
+            color: #0056b3;
+        }
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border-color: #c3e6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="registerBox">
+        <img class="user" src="https://i.ibb.co/yVGxFPR/2.png" height="100px" width="100px" alt="User Icon">
+        <h3 class="text-center">Registrarse</h3>
+        
+        <!-- Mostrar mensajes -->
+        <div class="container">
+            {% if messages %}
+                <div class="alert alert-success" role="alert">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="inputBox">
+                <input id="uname" type="text" name="username" placeholder="Username" required>
+                <input id="pass1" type="password" name="password1" placeholder="Contraseña" required>
+                <input id="pass2" type="password" name="password2" placeholder="Confirmar Contraseña" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Registrarme</button>
+        </form>
+        <div class="text-center mt-3">
+            <p>¿Ya tienes una cuenta? <a href="{% url 'login' %}">Inicia Sesión</a></p>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
