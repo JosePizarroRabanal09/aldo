@@ -173,7 +173,7 @@
                 <li class="nav-item">
                     <a href="{% url 'ver_reportes' %}" class="nav-link sidebar-link"><i class="fas fa-chart-line me-2"></i>Reportes</a>
                 </li>
-                
+
             </ul>
         </nav>
 
@@ -216,7 +216,7 @@
                                     </div>
                                     <div class="col-md-3 form-group">
                                         <label for="talla" class="form-label">Talla</label>
-                                        <input type="text" class="form-control" id="talla" name="talla" maxlength="10" required>
+                                        <input type="text" class="form-control" id="talla" name="talla" maxlength="25" required>
                                     </div>
                                     <div class="col-md-3 form-group">
                                         <label for="fecha_compra" class="form-label">Fecha Compra</label>
@@ -224,16 +224,34 @@
                                     </div>
                                     <div class="col-md-3 form-group">
                                         <label for="marca" class="form-label">Marca</label>
-                                        <input type="text" class="form-control" id="marca" name="marca" maxlength="10" required>
+                                        <input type="text" class="form-control" id="marca" name="marca" maxlength="25" required>
                                     </div>
                                     <div class="col-md-3 form-group">
                                         <label for="categoria" class="form-label">Categoría</label>
-                                        <select class="form-control" id="categoria" name="categoria" required>
-                                            <option value="" disabled selected>Seleccione una categoría</option>
-                                            <option value="Zapatilla">Zapatilla</option>
-                                            <option value="Polo">Polo</option>
-                                            <option value="Mochila">Mochila</option>
-                                        </select>
+<select class="form-control" id="categoria" name="categoria" required>
+    <option value="" disabled selected>Seleccione una categoría</option>
+    <option value="Camisero">Camisero</option>
+    <option value="Polo">Polo</option>
+    <option value="Pantalon">Pantalon</option>
+    <option value="TrackPant">TrackPant</option>
+    <option value="Casaca">Casaca</option>
+    <option value="Cortaviento">Cortaviento</option>
+    <option value="Hoodie">Hoodie</option>
+    <option value="Gorra">Gorra</option>
+    <option value="Cremallera">Cremallera</option>
+    <option value="Crewneck">Crewneck</option>
+    <option value="Short">Short</option>
+    <option value="Zapatilla">Zapatilla</option>
+    <option value="Chaleco">Chaleco</option>
+    <option value="Mochila">Mochila</option>
+    <option value="Totebag">Totebag</option>
+    <option value="Beanie">Beanie</option>
+    <option value="Cargo">Cargo</option>
+    <option value="Carpintero">Carpintero</option>
+    <option value="Jacket">Jacket</option>
+        <option value="Polar">Polar</option>
+
+</select>
                                     </div>
                                     <div class="col-md-3 form-group">
                                         <label for="descripcion" class="form-label">Descripción</label>
@@ -258,7 +276,21 @@
 
         </div>
     </div>
+<script>
+    function getLocalDate() {
+        const now = new Date();
+        // Ajustar el formato a YYYY-MM-DD
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
 
+    // Obtener la fecha local
+    const today = getLocalDate();
+    // Establecer el valor del campo de fecha a la fecha actual
+    document.getElementById('fecha_compra').value = today;
+</script>
     <!-- Notification -->
     {% if messages %}
         <div id="notification" class="notification">

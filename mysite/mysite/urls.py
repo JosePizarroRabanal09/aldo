@@ -1,7 +1,7 @@
 
 from django.contrib import admin
 from django.urls import path
-from myapp.views  import * 
+from myapp.views  import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', user_login, name='login'),
@@ -25,5 +25,9 @@ urlpatterns = [
     path('declaracion_jurada/', declaracion_jurada, name='declaracion_jurada'),
     path('aumentar_capital/', aumentar_capital, name='aumentar_capital'),
     path('reportes/', ver_reportes, name='ver_reportes'),
+    path('modificar_emisor/<int:id>/', modificar_emisor, name='modificar_emisor'),
+    path('eliminar_emisor/<int:id>/', eliminar_emisor, name='eliminar_emisor'),
+    path('modificar_gasto/<int:id>/', modificar_gasto, name='modificar_gasto'),
+    path('eliminar_gasto/<int:id>/', eliminar_gasto, name='eliminar_gasto'),
 
 ]

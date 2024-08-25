@@ -169,7 +169,7 @@
                 <li class="nav-item">
                     <a href="{% url 'ver_reportes' %}" class="nav-link sidebar-link"><i class="fas fa-chart-line me-2"></i>Reportes</a>
                 </li>
-                
+
             </ul>
         </nav>
 
@@ -198,7 +198,7 @@
                 <h1>Ventas</h1>
                 <div class="table-container">
                     <h5>Listado de Ventas</h5>
-                    
+
                     <div class="d-flex justify-content-between mb-4">
                         <div class="btn-group">
                             <a href="{% url 'crear_venta' %}" class="btn btn-primary me-2"><i class="fas fa-plus me-2"></i>Agregar Venta</a>
@@ -227,6 +227,7 @@
                                 {% if estado_filtro == 'PENDIENTE' or estado_filtro == 'TODOS' %}
                                     <th>Abono actual</th>
                                 {% endif %}
+                                <th>Tipo</th>
                                 <th>Ganancia</th>
                             </tr>
                         </thead>
@@ -235,11 +236,11 @@
                                 <tr>
                                     <td>{{ item.venta.producto.nombre }}</td>
                                     <td>{{ item.venta.cliente.nombre }} {{ item.venta.cliente.apellido }}</td>
-                                    <td>{{ item.venta.fecha_compra }}</td>
+                                    <td>{{ item.fecha_formateada  }}</td>
                                     <td>{{ item.venta.total_venta }}</td>
                                     <td>
-                                        <span class="badge 
-                                            {% if item.venta.estado == 'COMPLETADO' %} bg-success 
+                                        <span class="badge
+                                            {% if item.venta.estado == 'COMPLETADO' %} bg-success
                                             {% else %} bg-warning text-dark {% endif %}">
                                             {{ item.venta.estado }}
                                         </span>
@@ -251,6 +252,7 @@
                                             <td>N/A</td>
                                         {% endif %}
                                     {% endif %}
+                                    <td>{{ item.venta.tipo_venta }}</td>
                                     <td class="text-success font-weight-bold">
                                         <i class="fas fa-dollar-sign"></i> {{ item.ganancia }}
                                     </td>
@@ -278,7 +280,7 @@
                                     </a>
                                 </li>
                             {% endif %}
-            
+
                             {% for num in page_obj.paginator.page_range %}
                                 {% if page_obj.number == num %}
                                     <li class="page-item active"><span class="page-link">{{ num }}</span></li>
@@ -286,7 +288,7 @@
                                     <li class="page-item"><a class="page-link" href="?page={{ num }}&estado={{ estado_filtro }}">{{ num }}</a></li>
                                 {% endif %}
                             {% endfor %}
-            
+
                             {% if page_obj.has_next %}
                                 <li class="page-item">
                                     <a class="page-link" href="?page={{ page_obj.next_page_number }}&estado={{ estado_filtro }}" aria-label="Siguiente">
@@ -303,9 +305,9 @@
                     </nav>
                 </div>
             </div>
-            
-            
-            
+
+
+
 
         </div>
     </div>

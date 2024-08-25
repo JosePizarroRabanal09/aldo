@@ -23,12 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-mfoz2t-d4ib6enihbn!u80)nhn5893kgmcaxrwkocdco4jt!7_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 import os
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['aldosor.pythonanywhere.com','localhost','127.0.0.1']
 # settings.py
 STATIC_URL = '/static/'
 
@@ -115,7 +115,7 @@ TIME_ZONE = 'America/Lima'
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -123,9 +123,19 @@ USE_TZ = True
 import os  # Asegúrate de importar os
 
 STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Define STATIC_ROOT here
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Cambia a un directorio diferente
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+
+
+
+
+
+
+

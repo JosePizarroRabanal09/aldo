@@ -164,7 +164,7 @@
                 <li class="nav-item">
                     <a href="{% url 'ver_reportes' %}" class="nav-link sidebar-link"><i class="fas fa-chart-line me-2"></i>Reportes</a>
                 </li>
-                
+
             </ul>
         </nav>
 
@@ -199,8 +199,10 @@
                                 <div class="mb-3">
                                     <label for="tipo_gasto" class="form-label">Tipo de Gasto</label>
                                     <select id="tipo_gasto" name="tipo_gasto" class="form-select" required>
-                                        <option value="Familiar">Familiar</option>
-                                        <option value="Personal">Personal</option>
+                                        <option value="Comida">Comida</option>
+                                        <option value="Pasaje">Pasaje</option>
+                                        <option value="Otros">Otros</option>
+
                                     </select>
                                 </div>
                             </div>
@@ -210,12 +212,12 @@
                                     <input type="number" id="monto" name="monto" class="form-control" step="0.01" required>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="fecha" class="form-label">Fecha</label>
-                                    <input type="date" id="fecha" name="fecha" class="form-control" required>
-                                </div>
-                            </div>
+<div class="col-md-6">
+    <div class="mb-3">
+        <label for="fecha" class="form-label">Fecha</label>
+        <input type="date" id="fecha" name="fecha" class="form-control" required>
+    </div>
+</div>
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="descripcion" class="form-label">Descripción</label>
@@ -238,7 +240,19 @@
             {% endif %}
         </div>
     </div>
+<script>
+    // Función para obtener la fecha local en formato YYYY-MM-DD
+    function getLocalDate() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0'); // Meses son 0-indexed
+        const day = String(now.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
 
+    // Obtener la fecha local y establecerla como el valor del campo
+    document.getElementById('fecha').value = getLocalDate();
+</script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {

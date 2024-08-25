@@ -173,7 +173,7 @@
                 <li class="nav-item">
                     <a href="{% url 'ver_reportes' %}" class="nav-link sidebar-link"><i class="fas fa-chart-line me-2"></i>Reportes</a>
                 </li>
-                
+
             </ul>
         </nav>
 
@@ -200,10 +200,23 @@
 
             <div class="container">
                 <h1>Productos</h1>
-                <a href="{% url 'crear_producto' %}" class="btn btn-primary mb-3">
-                    <i class="fas fa-box"></i> Agregar Producto
-                </a>
-                <div class="table-container">
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <a href="{% url 'crear_producto' %}" class="btn btn-primary">
+        <i class="fas fa-box"></i> Agregar Producto
+    </a>
+
+    <form method="GET" class="d-flex" action="{% url 'ver_productos' %}">
+        <input type="text" id="searchInput" class="form-control me-2" placeholder="Buscar producto..." onkeyup="filterProducts()">
+        <select name="estado" class="form-select me-2">
+            <option value="">Todos</option>
+            <option value="Disponible" {% if request.GET.estado == 'Disponible' %}selected{% endif %}>Disponible</option>
+            <option value="Vendido" {% if request.GET.estado == 'Vendido' %}selected{% endif %}>Vendido</option>
+        </select>
+    <button type="submit" class="btn btn-outline-secondary">Filtrar</button>
+    </form>
+</div>
+
+                <div id="productTable" class="table-container">
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -229,8 +242,8 @@
                                 <td>{{ producto.precio_venta }}</td>
                                 <td>{{ producto.fecha_compra }}</td>
                                 <td>
-                                    <span class="badge 
-                                        {% if producto.get_estado_display == 'Disponible' %} bg-success 
+                                    <span class="badge
+                                        {% if producto.get_estado_display == 'Disponible' %} bg-success
                                         {% else %} bg-danger {% endif %}">
                                         {{ producto.get_estado_display  }}
                                     </span>
@@ -255,7 +268,7 @@
                             <a class="page-link" href="?page={{ productos.previous_page_number }}">Anterior</a>
                         </li>
                         {% endif %}
-                        
+
                         {% for num in productos.paginator.page_range %}
                             {% if productos.number == num %}
                                 <li class="page-item active" aria-current="page"><span class="page-link">{{ num }}</span></li>
@@ -263,7 +276,7 @@
                                 <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
                             {% endif %}
                         {% endfor %}
-                        
+
                         {% if productos.has_next %}
                         <li class="page-item">
                             <a class="page-link" href="?page={{ productos.next_page_number }}">Siguiente</a>
@@ -301,6 +314,31 @@
             document.getElementById('sidebar').classList.toggle('active');
         });
     </script>
+    <script>
+    function filterProducts() {
+        const input = document.getElementById('searchInput');
+        const filter = input.value.toLowerCase();
+        const table = document.getElementById('productTable');
+        const rows = table.getElementsByTagName('tr');
+
+        for (let i = 1; i < rows.length; i++) {
+            const td = rows[i].getElementsByTagName('td')[0];
+            if (td) {
+                const txtValue = td.textContent || td.innerText;
+                if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                    rows[i].style.display = "";
+                } else {
+                    rows[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+    function searchProduct() {
+        filterProducts();
+    }
+</script>
+
 </body>
 
 </html>
